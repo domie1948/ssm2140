@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ShenqingDao">
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.sys_types as sysTypes
+        ,a.yh_types as yhTypes
+        ,a.create_time as createTime
+        ,a.sq_types as sqTypes
+    </sql>
+
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.ShenqingView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM Shenqing  a
+        <where>
+            <if test=" params.sysTypes != '' and params.sysTypes != null and params.sysTypes != 'null' ">
+                and a.sys_types = #{params.sysTypes}
+            </if>
+            <if test=" params.yhTypes != '' and params.yhTypes != null">
+                and a.yh_types = #{params.yhTypes}
+            </if>
+            <if test=" params.sqTypes != '' and params.sqTypes != null and params.sqTypes != 'null' ">
+                and a.sq_types = #{params.sqTypes}
+            </if>
+        </where>
+        order by a.id desc
+    </select>
+
+</mapper>
